@@ -1,0 +1,12 @@
+Now you need to copy your index.html into the cloned repo folder. Here's exactly what to do:
+1. Find where GitHub Desktop cloned the repo
+In GitHub Desktop, click Repository in the top menu → Show in Explorer (Windows) or Show in Finder (Mac). A folder will open — that's your local repo folder.
+2. Copy the file in
+Go to your Mypizzaworld.net folder, copy the index.html file, and paste it into that repo folder. If there's already an index.html there, replace it.
+3. Go back to GitHub Desktop
+It will automatically detect the new file and show the changes in the left panel.
+4. Commit and Push
+At the bottom left you'll see a box — type a short message like Updated website and click Commit to main. Then click Push origin at the top right.
+5. Watch xCloud deploy
+Log into your xCloud dashboard and you should see it automatically pulling the update within a minute or two.
+That's the full workflow done! From now on whenever I update your site, you just repeat steps 2–4. Want me to make any changes to the site right now so you can test the full pipeline?

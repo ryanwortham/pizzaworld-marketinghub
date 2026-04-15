@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reels & Videos - Pizza World Marketing Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #d91f1f;
+            --dark: #111;
+            --dark2: #1c1c1c;
+            --light: #e0e0e0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: var(--dark);
+            color: var(--light);
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.97);
+            border-bottom: 2px solid var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 70px;
+        }
+        nav img {
+            height: 50px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--red);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 40px 60px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .header h1 span {
+            color: var(--red);
+        }
+        .header p {
+            font-size: 18px;
+            color: #999;
+            font-weight: 300;
+        }
+        .info-card {
+            background: rgba(217, 31, 31, 0.15);
+            border: 2px solid var(--red);
+            border-radius: 4px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .info-card p {
+            font-size: 20px;
+            line-height: 1.8;
+            margin: 0;
+        }
+        .tips-section {
+            margin-bottom: 60px;
+        }
+        .tips-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .tip-card {
+            background: var(--dark2);
+            border-left: 4px solid var(--red);
+            padding: 25px;
+            border-radius: 4px;
+        }
+        .tip-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .tip-card p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #ccc;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 100px 20px 40px;
+            }
+            nav {
+                padding: 0 20px;
+            }
+            .header h1 {
+                font-size: 32px;
+            }
+            .info-card {
+                padding: 25px;
+            }
+            .info-card p {
+                font-size: 16px;
+            }
+            .tips-title {
+                font-size: 24px;
+            }
+            .tip-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html"><img src="https://mypizzaworld.net/wp-content/uploads/2024/02/PW-NEW-logo-1996-R-1.png" style="height:50px;" alt="Pizza World Logo" /></a>
+        <a href="index.html">← Back to Hub</a>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>Reels & <span>Videos</span></h1>
+            <p>Engaging short-form video content ready to post on TikTok, Instagram Reels, and Facebook</p>
+        </div>
+
+        <div class="info-card">
+            <p>🎬 Video content is available inside the full Marketing Hub. Log into mypizzaworld.net to browse and download all reels and video content.</p>
+        </div>
+
+        <div class="tips-section">
+            <div class="tips-title">Reel Tips & Best Practices</div>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>Ideal Length</h3>
+                    <p>Keep your reels between 7-15 seconds for maximum engagement. Short, snappy content performs best on TikTok, Instagram Reels, and Facebook. Grab attention in the first 2 seconds!</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Best Posting Times</h3>
+                    <p>Post weekdays between 6-9 AM or 5-7 PM when your audience is most active. Avoid late night and early morning hours. Test posting at different times to find your audience's peak engagement window.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Music & Audio</h3>
+                    <p>Use trending audio and music to boost visibility. TikTok and Instagram algorithms favor content with popular sounds. Add captions to make your reels accessible and engaging with sound off.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Photos – Pizza World Gourmet Pizzeria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #d91f1f; --red2: #ff3333;
+      --dark: #111; --dark2: #1c1c1c; --dark3: #252525;
+      --gold: #c9a84c; --gray: #aaa;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Open Sans', sans-serif; background: var(--dark); color: #fff; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(10,10,10,0.97); border-bottom: 2px solid var(--red);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 70px;
+    }
+    .nav-logo img { height: 50px; }
+    .nav-back {
+      display: flex; align-items: center; gap: 8px;
+      color: #fff; text-decoration: none;
+      font-family: 'Oswald', sans-serif; font-size: 13px;
+      letter-spacing: 1px; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--red2); }
+
+    /* HERO */
+    .page-hero {
+      padding: 110px 40px 50px;
+      background: var(--dark2);
+      text-align: center;
+      border-bottom: 2px solid var(--red);
+    }
+    .page-hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+    }
+    .page-hero h1 span { color: var(--red2); }
+    .page-hero p { color: var(--gray); margin-top: 12px; font-size: 15px; }
+
+    /* CATEGORY TABS */
+    .tab-bar {
+      position: sticky; top: 70px; z-index: 900;
+      background: var(--dark3);
+      border-bottom: 1px solid #2a2a2a;
+      display: flex; overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex-shrink: 0;
+      padding: 16px 24px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray); background: transparent; border: none;
+      cursor: pointer; transition: color .2s, border-color .2s;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: #fff; }
+    .tab-btn.active { color: #fff; border-bottom-color: var(--red); }
+
+    /* GALLERY SECTIONS */
+    .gallery-section { display: none; padding: 50px 40px; max-width: 1400px; margin: 0 auto; }
+    .gallery-section.active { display: block; }
+
+    .section-header { margin-bottom: 30px; }
+    .section-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px; font-weight: 700; text-transform: uppercase;
+    }
+    .section-header span {
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red); display: block; margin-bottom: 6px;
+    }
+    .photo-count { color: var(--gray); font-size: 13px; margin-top: 4px; }
+
+    /* PHOTO GRID */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .photo-tile {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      background: var(--dark3);
+      border: 1px solid #2a2a2a;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .photo-tile:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,0.6); z-index: 1; }
+    .photo-tile img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .3s;
+    }
+    .photo-tile:hover img { transform: scale(1.06); }
+    .photo-tile .overlay {
+      position: absolute; inset: 0;
+      background: rgba(217,31,31,0);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .25s;
+    }
+    .photo-tile:hover .overlay { background: rgba(217,31,31,0.15); }
+    .photo-tile .overlay span {
+      opacity: 0; color: #fff; font-size: 28px;
+      transition: opacity .25s;
+    }
+    .photo-tile:hover .overlay span { opacity: 1; }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.95);
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90vw; max-height: 90vh;
+      object-fit: contain; border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+    .lightbox-close {
+      position: absolute; top: 20px; right: 30px;
+      font-size: 40px; color: #fff; cursor: pointer;
+      line-height: 1; transition: color .2s;
+    }
+    .lightbox-close:hover { color: var(--red2); }
+    .lightbox-prev, .lightbox-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      font-size: 36px; color: rgba(255,255,255,0.6);
+      cursor: pointer; padding: 20px; transition: color .2s;
+      user-select: none;
+    }
+    .lightbox-prev { left: 10px; }
+    .lightbox-next { right: 10px; }
+    .lightbox-prev:hover, .lightbox-next:hover { color: #fff; }
+    .lightbox-counter {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-family: 'Oswald', sans-serif; font-size: 13px;
+      letter-spacing: 2px; color: rgba(255,255,255,0.5);
+    }
+
+    /* DOWNLOAD BTN */
+    .download-btn {
+      position: absolute; bottom: 20px; right: 20px;
+      background: var(--red); color: #fff;
+      padding: 10px 20px; border-radius: 4px;
+      font-family: 'Oswald', sans-serif; font-size: 12px;
+      letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; transition: background .2s;
+    }
+    .download-btn:hover { background: var(--red2); }
+
+    @media (max-width: 600px) {
+      .photo-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+      nav { padding: 0 20px; }
+      .gallery-section { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="https://mypizzaworld.net/wp-content/uploads/2024/02/PW-NEW-logo-1996-R-1.png" alt="Pizza World" />
+  </a>
+  <a class="nav-back" href="index.html">← Back to Hub</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <h1>Product <span>Photos</span></h1>
+  <p>Download and use these professional photos across all your marketing channels</p>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar" id="tabBar">
+  <button class="tab-btn active" onclick="showTab('pizza', this)">🍕 Pizza</button>
+  <button class="tab-btn" onclick="showTab('wings', this)">🍗 Wings</button>
+  <button class="tab-btn" onclick="showTab('subs', this)">🥖 Subs</button>
+  <button class="tab-btn" onclick="showTab('salads', this)">🥗 Salads</button>
+  <button class="tab-btn" onclick="showTab('pasta', this)">🍝 Pasta</button>
+  <button class="tab-btn" onclick="showTab('ravioli', this)">Toasted Ravioli</button>
+  <button class="tab-btn" onclick="showTab('calzones', this)">Calzones</button>
+  <button class="tab-btn" onclick="showTab('breads', this)">Breads</button>
+  <button class="tab-btn" onclick="showTab('combo', this)">Combo Photos</button>
+</div>
+
+<!-- ═══ PIZZA ═══════════════════════════════════════ -->
+<div class="gallery-section active" id="tab-pizza">
+  <div class="section-header"><span>Product Photos</span><h2>Pizza</h2><p class="photo-count">47 photos</p></div>
+  <div class="photo-grid" id="grid-pizza"></div>
+</div>
+<!-- ═══ WINGS ═══════════════════════════════════════ -->
+<div class="gallery-section" id="tab-wings">
+  <div class="section-header"><span>Product Photos</span><h2>Wings</h2><p class="photo-count">35 photos</p></div>
+  <div class="photo-grid" id="grid-wings"></div>
+</div>
+<!-- ═══ SUBS ════════════════════════════════════════ -->
+<div class="gallery-section" id="tab-subs">
+  <div class="section-header"><span>Product Photos</span><h2>Subs</h2><p class="photo-count">22 photos</p></div>
+  <div class="photo-grid" id="grid-subs"></div>
+</div>
+<!-- ═══ SALADS ═══════════════════════════════════════ -->
+<div class="gallery-section" id="tab-salads">
+  <div class="section-header"><span>Product Photos</span><h2>Salads</h2><p class="photo-count">38 photos</p></div>
+  <div class="photo-grid" id="grid-salads"></div>
+</div>
+<!-- ═══ PASTA ═══════════════════════════════════════ -->
+<div class="gallery-section" id="tab-pasta">
+  <div class="section-header"><span>Product Photos</span><h2>Pasta</h2><p class="photo-count">7 photos</p></div>
+  <div class="photo-grid" id="grid-pasta"></div>
+</div>
+<!-- ═══ TOASTED RAVIOLI ══════════════════════════════ -->
+<div class="gallery-section" id="tab-ravioli">
+  <div class="section-header"><span>Product Photos</span><h2>Toasted Ravioli</h2><p class="photo-count">4 photos</p></div>
+  <div class="photo-grid" id="grid-ravioli"></div>
+</div>
+<!-- ═══ CALZONES ═════════════════════════════════════ -->
+<div class="gallery-section" id="tab-calzones">
+  <div class="section-header"><span>Product Photos</span><h2>Calzones</h2><p class="photo-count">2 photos</p></div>
+  <div class="photo-grid" id="grid-calzones"></div>
+</div>
+<!-- ═══ BREADS ═══════════════════════════════════════ -->
+<div class="gallery-section" id="tab-breads">
+  <div class="section-header"><span>Product Photos</span><h2>Breads</h2><p class="photo-count">2 photos</p></div>
+  <div class="photo-grid" id="grid-breads"></div>
+</div>
+<!-- ═══ COMBO PHOTOS ══════════════════════════════════ -->
+<div class="gallery-section" id="tab-combo">
+  <div class="section-header"><span>Product Photos</span><h2>Combo Photos</h2><p class="photo-count">23 photos</p></div>
+  <div class="photo-grid" id="grid-combo"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <span class="lightbox-close" onclick="closeLightboxDirect()">×</span>
+  <span class="lightbox-prev" onclick="lightboxNav(-1); event.stopPropagation();">&#8249;</span>
+  <img id="lightbox-img" src="" alt="" />
+  <span class="lightbox-next" onclick="lightboxNav(1); event.stopPropagation();">&#8250;</span>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+  <a id="lightbox-download" class="download-btn" href="" download target="_blank" onclick="event.stopPropagation()">⬇ Download</a>
+</div>
+
+<script>
+const BASE = 'https://mypizzaworld.net/wp-content/uploads/';
+
+const photos = {
+  pizza: [
+    '2023/10/DSC02189-54.jpg','2023/10/DSC02157-48.jpg','2023/10/DSC02136-43.jpg',
+    '2023/10/DSC02144-46.jpg','2023/10/DSC02124-38.jpg','2023/10/DSC02133-41.jpg',
+    '2023/10/DSC02121-36.jpg','2023/10/DSC02110-33.jpg','2023/10/DSC02117-35.jpg',
+    '2023/10/DSC02099-29.jpg','2023/10/DSC02064-23.jpg','2023/10/DSC02058-20.jpg',
+    '2023/10/DSC02056-19.jpg','2023/10/DSC02055-18.jpg','2023/10/DSC02048-15.jpg',
+    '2023/10/DSC02036-13.jpg','2023/10/DSC01867-2.jpg','2023/10/img_9977_0.jpg',
+    '2023/10/img_9919_0.jpg','2023/10/img_9903_0.jpg','2023/10/img_9863_0.jpg',
+    '2023/10/img_9854_0.jpg','2023/10/img_9853_0.jpg','2023/10/img_9847_0.jpg',
+    '2023/10/img_9760_0.jpg','2023/10/img_9758_0.jpg','2023/10/img_7577_0.jpg',
+    '2023/10/img_0133_0.jpg','2023/10/img_0119_0.jpg','2023/10/img_0093_0.jpg',
+    '2023/10/img_0062_0.jpg','2023/10/img_0050_0.jpg','2023/10/img_0004_0.jpg',
+    '2023/10/DSC09724-196.jpg','2023/10/DSC09722-194.jpg','2023/10/DSC09695-173.jpg',
+    '2023/10/DSC09685-166.jpg','2023/10/DSC09683-165.jpg','2023/10/DSC09658-153.jpg',
+    '2023/10/DSC09652-149.jpg','2023/10/DSC09647-145.jpg','2023/10/DSC09641-141.jpg',
+    '2023/10/DSC09638-139.jpg','2023/10/DSC09630-137.jpg','2023/10/DSC09570-99.jpg',
+    '2023/10/DSC02251-60.jpg','2023/10/DSC02248-59.jpg'
+  ],
+  wings: [
+    '2023/10/img_9770_0.jpg','2023/10/img_9769_0.jpg','2023/10/DSC09895-293.jpg',
+    '2023/10/DSC09893-291.jpg','2023/10/DSC09892-290.jpg','2023/10/DSC09891-289.jpg',
+    '2023/10/DSC09890-288.jpg','2023/10/DSC09887-286.jpg','2023/10/DSC09884-283.jpg',
+    '2023/10/DSC09875-279.jpg','2023/10/DSC09872-277.jpg','2023/10/DSC09870-275.jpg',
+    '2023/10/DSC09863-271.jpg','2023/10/DSC09858-268.jpg','2023/10/DSC09854-267.jpg',
+    '2023/10/DSC09849-265.jpg','2023/10/DSC09844-263.jpg','2023/10/DSC09843-262.jpg',
+    '2023/10/DSC09842-261.jpg','2023/10/DSC07513-142.jpg','2023/10/DSC07502-3.jpg',
+    '2023/10/DSC07490-137.jpg','2023/10/DSC07488-136.jpg','2023/10/DSC07484-135.jpg',
+    '2023/10/DSC07482-134.jpg','2023/10/DSC07481-133.jpg','2023/10/DSC07477-131.jpg',
+    '2023/10/DSC07468-127.jpg','2023/10/DSC07461-124.jpg','2023/10/DSC07457-123.jpg',
+    '2023/10/DSC07453-122.jpg','2023/10/DSC07449-121.jpg','2023/10/DSC07447-119.jpg',
+    '2023/10/DSC07446-118.jpg','2023/10/DSC07440-117.jpg'
+  ],
+  subs: [
+    '2023/11/Sub-1.jpg','2023/11/Sub-2.jpg','2023/11/Sub-3.jpg',
+    '2023/10/img_1070_0.jpg','2023/10/DSC02435-83.jpg','2023/10/DSC02414-80.jpg',
+    '2023/10/DSC02413-79.jpg','2023/10/DSC02402-77.jpg','2023/10/DSC02398-76.jpg',
+    '2023/10/DSC02395-74.jpg','2023/10/DSC02362-71.jpg','2023/10/DSC00044-368.jpg',
+    '2023/10/DSC00033-363.jpg','2023/10/DSC00015-356.jpg','2023/10/DSC00004-352.jpg',
+    '2023/10/40522679_263830047455412_3238294754366062592_n.jpg',
+    '2023/10/40410013_317642005657263_4603807832930779136_n.jpg',
+    '2023/10/40355689_314568589318666_8497848848201285632_n.jpg',
+    '2023/10/img_1121_0.jpg','2023/10/img_1119_0.jpg',
+    '2023/10/img_1079_0.jpg','2023/10/img_1116_0.jpg'
+  ],
+  salads: [
+    '2023/10/DSC00063-378.jpg','2023/10/DSC00067-380.jpg','2023/10/DSC02469-95.jpg',
+    '2023/10/DSC02471-96.jpg','2023/10/DSC02477-98.jpg','2023/10/DSC02478-99.jpg',
+    '2023/10/DSC02484-101.jpg','2023/10/DSC09411-1.jpg','2023/10/DSC09415-5.jpg',
+    '2023/10/DSC09419-9.jpg','2023/10/DSC09421-11.jpg','2023/10/DSC09440-2.jpg',
+    '2023/10/DSC09441-3.jpg','2023/10/DSC09450-22.jpg','2023/10/DSC09462-31.jpg',
+    '2023/10/DSC09468-35.jpg','2023/10/DSC09470-10.jpg','2023/10/DSC09484-44.jpg',
+    '2023/10/DSC09490-48.jpg','2023/10/DSC09491-49.jpg','2023/10/DSC09498-54.jpg',
+    '2023/10/DSC09507-61.jpg','2023/10/DSC09519-72.jpg','2023/10/DSC09521-74.jpg',
+    '2023/10/img_0009_0.jpg','2023/10/img_0034_0.jpg','2023/10/img_0110_0.jpg',
+    '2023/10/img_0115_0.jpg','2023/10/img_0140_0.jpg','2023/10/img_0164_0.jpg',
+    '2023/10/img_0178_0.jpg','2023/10/img_0180_1.jpg','2023/10/img_0180_2.jpg',
+    '2023/10/img_0180_3.jpg','2023/10/img_0193_0.jpg','2023/10/img_0203_0.jpg',
+    '2023/10/img_1014_0.jpg','2023/10/img_9920_0.jpg'
+  ],
+  pasta: [
+    '2023/10/DSC02637-141.jpg','2023/10/DSC09930-308.jpg','2023/10/DSC02644-144.jpg',
+    '2023/10/DSC09933-310.jpg','2023/10/DSC09936-313.jpg','2023/10/DSC09939-316.jpg',
+    '2023/10/DSC09942-317.jpg'
+  ],
+  ravioli: [
+    '2023/10/PW-Toasted-Raviola-1-2048x1365.jpeg',
+    '2023/10/PW-Raviola-2-1536x1024.jpeg',
+    '2023/10/DSC09768-220-2048x1748.jpg',
+    '2023/10/DSC09729-198-scaled.jpg'
+  ],
+  calzones: [
+    '2023/10/DSC07419-113.jpg',
+    '2023/10/PW-Calzone-2-scaled.jpeg'
+  ],
+  breads: [
+    '2023/10/PW-Bread-Sticks6-1-scaled.jpeg',
+    '2023/10/PW-Bread-Sticks-2-scaled.jpeg'
+  ],
+  combo: [
+    '2023/10/img_9727_0.jpg','2023/10/img_9732_0.jpg','2023/10/img_9738_0.jpg',
+    '2023/10/dy_5_febapril22_pizzaworld.png','2023/10/DSC09744-209.jpg',
+    '2023/10/DSC09736-203.jpg','2023/10/DSC09735-202.jpg','2023/10/DSC09729-198.jpg',
+    '2023/10/DSC07432-116.jpg','2023/10/DSC07423-114.jpg','2023/10/DSC07419-113.jpg',
+    '2023/10/DSC07417-112.jpg','2023/10/DSC07415-111.jpg','2023/10/DSC02659-147.jpg',
+    '2023/10/DSC02653-146.jpg','2023/10/DSC02462-94.jpg','2023/10/DSC02477-98-1.jpg',
+    '2023/10/DSC02558-121.jpg','2023/10/DSC02628-139.jpg','2023/10/DSC02630-140.jpg',
+    '2023/10/DSC02461-93.jpg','2023/10/DSC02457-92.jpg','2023/10/DSC02440-86.jpg'
+  ]
+};
+
+// Current lightbox state
+let currentCategory = 'pizza';
+let currentIndex = 0;
+
+// Build all grids
+Object.entries(photos).forEach(([cat, imgs]) => {
+  const grid = document.getElementById('grid-' + cat);
+  imgs.forEach((path, i) => {
+    const url = BASE + path;
+    const tile = document.createElement('div');
+    tile.className = 'photo-tile';
+    tile.innerHTML = `
+      <img src="${url}" alt="${cat} photo ${i+1}" loading="lazy" />
+      <div class="overlay"><span>🔍</span></div>
+    `;
+    tile.addEventListener('click', () => openLightbox(cat, i));
+    grid.appendChild(tile);
+  });
+});
+
+// Tab switching
+function showTab(cat, btn) {
+  document.querySelectorAll('.gallery-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + cat).classList.add('active');
+  btn.classList.add('active');
+  currentCategory = cat;
+}
+
+// Lightbox
+function openLightbox(cat, index) {
+  currentCategory = cat;
+  currentIndex = index;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateLightbox() {
+  const imgs = photos[currentCategory];
+  const url = BASE + imgs[currentIndex];
+  document.getElementById('lightbox-img').src = url;
+  document.getElementById('lightbox-download').href = url;
+  document.getElementById('lightbox-counter').textContent =
+    (currentIndex + 1) + ' / ' + imgs.length;
+}
+
+function lightboxNav(dir) {
+  const imgs = photos[currentCategory];
+  currentIndex = (currentIndex + dir + imgs.length) % imgs.length;
+  updateLightbox();
+}
+
+function closeLightbox(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightboxDirect();
+}
+function closeLightboxDirect() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Keyboard nav
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  if (e.key === 'ArrowLeft') lightboxNav(-1);
+  if (e.key === 'Escape') closeLightboxDirect();
+});
+</script>
+</body>
+</html>

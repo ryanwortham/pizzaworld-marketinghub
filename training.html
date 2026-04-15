@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Training Videos - Pizza World Marketing Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #d91f1f;
+            --dark: #111;
+            --dark2: #1c1c1c;
+            --light: #e0e0e0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: var(--dark);
+            color: var(--light);
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.97);
+            border-bottom: 2px solid var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 70px;
+        }
+        nav img {
+            height: 50px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--red);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px 60px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .header h1 span {
+            color: var(--red);
+        }
+        .header p {
+            font-size: 18px;
+            color: #999;
+            font-weight: 300;
+        }
+        .info-card {
+            background: rgba(217, 31, 31, 0.15);
+            border: 2px solid var(--red);
+            border-radius: 4px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .info-card p {
+            font-size: 20px;
+            line-height: 1.8;
+            margin: 0;
+        }
+        .category-section {
+            margin-bottom: 60px;
+        }
+        .category-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .category-card {
+            background: var(--dark2);
+            border-left: 4px solid var(--red);
+            border-radius: 4px;
+            padding: 30px;
+            transition: transform 0.3s;
+        }
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        .category-card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .category-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .category-card p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #ccc;
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 100px 20px 40px;
+            }
+            nav {
+                padding: 0 20px;
+            }
+            .header h1 {
+                font-size: 32px;
+            }
+            .info-card {
+                padding: 25px;
+            }
+            .info-card p {
+                font-size: 16px;
+            }
+            .category-title {
+                font-size: 24px;
+            }
+            .category-card {
+                padding: 25px;
+            }
+            .category-card-icon {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html"><img src="https://mypizzaworld.net/wp-content/uploads/2024/02/PW-NEW-logo-1996-R-1.png" style="height:50px;" alt="Pizza World Logo" /></a>
+        <a href="index.html">← Back to Hub</a>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>Product Training <span>Videos</span></h1>
+            <p>Keep your team consistent and delivering the quality Pizza World is known for</p>
+        </div>
+
+        <div class="info-card">
+            <p>🎓 Training videos are available inside the full Marketing Hub. Log into mypizzaworld.net to access all product training content.</p>
+        </div>
+
+        <div class="category-section">
+            <div class="category-title">Training Categories</div>
+            <div class="category-grid">
+                <div class="category-card">
+                    <span class="category-card-icon">🍕</span>
+                    <h3>Pizza Making</h3>
+                    <p>Learn the secrets to crafting our signature gourmet pizzas. From dough preparation and sauce application to topping placement and perfect baking temperatures, master the art of Pizza World pizza.</p>
+                </div>
+
+                <div class="category-card">
+                    <span class="category-card-icon">🍗</span>
+                    <h3>Wings Preparation</h3>
+                    <p>Perfect crispy wings every time. Discover our wing preparation techniques, sauce application methods, and quality standards that make our wings a customer favorite.</p>
+                </div>
+
+                <div class="category-card">
+                    <span class="category-card-icon">🥪</span>
+                    <h3>Subs & Sandwiches</h3>
+                    <p>Build exceptional subs and sandwiches with proper ingredient portions, bread handling, and assembly techniques. Learn our secret ingredients and preparation methods.</p>
+                </div>
+
+                <div class="category-card">
+                    <span class="category-card-icon">💬</span>
+                    <h3>Customer Service</h3>
+                    <p>Represent Pizza World with excellence. Training on greeting customers, handling special requests, managing orders efficiently, and building lasting customer relationships.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
