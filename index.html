@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+    <script>(function(){var s=sessionStorage.getItem("pw_session");if(!s){sessionStorage.setItem("pw_return",location.pathname.split("/").pop());window.location.replace("login.html");return;}try{var d=JSON.parse(s);if(!d.u||Date.now()>d.exp){sessionStorage.removeItem("pw_session");sessionStorage.setItem("pw_return",location.pathname.split("/").pop());window.location.replace("login.html");}}catch(e){window.location.replace("login.html");}})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pizza World Marketing Hub – Gourmet Pizzeria Est. 1996</title>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
@@ -1078,5 +1079,6 @@
       window.scrollY > 60 ? 'rgba(8,8,8,0.99)' : 'rgba(10,10,10,0.97)';
   });
 </script>
+    <script src="auth-nav.js"></script>
 </body>
 </html>
